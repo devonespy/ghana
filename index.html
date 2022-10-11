@@ -1,50 +1,241 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>leaflet-map-simple</title>
+  <title>Ghana</title>
+  <meta charset="utf-8" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="utf-8">
 
-  <!-- Load Leaflet code library: see http://leafletjs.com/download.html -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-  <!-- Position the map and title with Cascading Style Sheet (CSS) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
   <style>
-  body { margin:0; padding:0; }
-  #map { position: absolute; top:0; bottom:0; right:0; left:0; }
-  #map-title { position: relative; margin-top: 10px; margin-left: 50px; float: left; background: white; border: 2px solid rgba(0,0,0,0.2); padding: 6px 8px; font-family: Helvetica; font-weight: bold; font-size: 24px; z-index: 800; }
+    html,
+    body {
+      height: 100%;
+    }
+    #map {
+      height: 75%;
+    }
+    .legend {
+      border: 1px solid white;
+      font-weight: bold;
+      color: black;
+      text-align: left;
+      width: 200px;
+      height: 60px;
+      line-height: 10px;
+      background: white;
+      opacity: 1;
+    } 
+    .legend i {
+      width: 50px;
+      height: 50px;
+      float: left;
+      margin-right: 0px;
+      opacity: 0.7;
+    }
+    .legend .square2 {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      margin-top: 4px;
+    }
   </style>
 </head>
 <body>
-
-  <!-- Display the map and title with HTML division tags  -->
-  <div id="map-title">EDIT map title</div>
-  <div id="map"></div>
-
-  <!-- Create the interactive map content with JavaScript (.js) -->
-  <script>
-
-  /* Set up the initial map center and zoom level */
-  var map = L.map('map', {
-    center: [41.77, -72.69], // EDIT coordinates to re-center map
-    zoom: 12,  // EDIT from 1 (zoomed out) to 18 (zoomed in)
-    scrollWheelZoom: false,
-    tap: false
+    <div id="map" style="width: 400px; height: 600px" ></div>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <script>
+      var map = L.map('map').setView([7.945025,-1.104159],7); 
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+	maxZoom: 16
+      }).addTo(map);
+var visited = L.icon({
+  iconUrl: 'images/star.png',
+  iconSize: [12,12],
+  iconAnchor:  [6,12], // point of the icon which will correspond to marker's location
+  popupAnchor: [-3, -62]  // the same for the shadow
   });
+// Places i've traveld to
+const accra = L.marker([5.603717, -0.186964], {icon: visited})
+    .bindPopup('Accra, Ghana 2 nights')
+    .addTo(map);
+const kumasi = L.marker([6.666600, -1.616271], {icon:visited})
+    .bindPopup('Kumasi, Ghana 1 night')
+    .addTo(map);
+const bolgatanga = L.marker([10.782727, -0.853369], {icon:visited})
+    .bindPopup('Bolgatanga, Ghana')
+    .addTo(map);
+const mole = L.marker([9.260970, -1.853310], {icon:visited})
+    .bindPopup('Mole, Ghana 2 nights')
+    .addTo(map);
+const nangodi = L.circle([10.855878, -0.668470], {
+    color: '#3e8041',
+    fillColor: 'green',
+    fillOpacity: 0.5,
+    radius: 2500
+}).bindPopup('Village of Nangodi 5 days')
+.addTo(map);
 
-  /* display basemap tiles -- see others at https://leaflet-extras.github.io/leaflet-providers/preview/ */
-  L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://osm.org/copyright">\
-        OpenStreetMap</a> contributors, &copy;\
-        <a href="https://carto.com/attribution">CARTO</a>'
-  }).addTo(map);
+//roadtrips
+var ghanaroad2 = [
+    [5.603717, -0.186964], //accra
+    [5.818231, -0.364970], 
+    [6.135366, -0.496573], 
+    [6.163074, -0.483611], 
+    [6.232223, -0.451400], 
+    [6.280925, -0.480796], 
+    [6.375132, -0.542123], 
+    [6.440256, -0.587519], 
+    [6.496646, -0.692039], 
+    [6.666600, -1.616271], // Kumasi
+    [6.884973, -1.643985],
+    [7.010063, -1.702595],
+    [7.087560, -1.712607],
+    [7.152817, -1.743399],
+    [7.256384, -1.819404],
+    [7.302779, -1.895575],
+    [7.440609, -1.979764],
+    [7.581045, -1.938338],
+    [7.875856, -1.781845],
+    [7.977464, -1.735643],
+    [8.054214, -1.727625],
+    [8.072738, -1.723616],
+    [8.086630, -1.702235],
+    [8.102506, -1.694885],
+    [8.161375, -1.691544],
+    [8.203041, -1.655463],
+    [8.237806, -1.634862],
+    [8.254367, -1.611536],
+    [8.341850, -1.569682],
+    [8.392226, -1.568559],
+    [8.414448, -1.559573],
+    [8.455578, -1.565336],
+    [8.471908, -1.559204],
+    [8.551163, -1.579682],
+    [8.792527, -1.570380],
+    [8.804736, -1.469632],
+    [8.819314, -1.454910],
+    [8.847280, -1.428494],
+    [8.886398, -1.423122],
+    [8.901940, -1.407668],
+    [9.123883, -1.273361],
+    [9.140406, -1.161566],
+    [9.400829, -0.841402], //tamale
+    [9.479430, -0.846151],
+    [9.695023, -0.831175],
+    [9.726582, -0.819491],
+    [9.807771, -0.860259],
+    [9.877978, -0.872293],
+    [9.982195, -0.825483],
+    [10.167543, -0.805507],
+    [10.220605, -0.829468],
+    [10.283972, -0.827971],
+    [10.350674, -0.798076], //walewale
+    [10.394350, -0.786141],
+    [10.465662, -0.789393],
+    [10.581847, -0.832949],
+    [10.782727, -0.853369]
+];
 
-  /* Display a point marker with pop-up text */
-  L.marker([41.77, -72.69]).addTo(map) // EDIT marker coordinates
-  .bindPopup("Insert pop-up text here"); // EDIT pop-up text message
+var ghanaroadline2 = L.polyline(ghanaroad2, {
+    color: 'red',
+    weight:1
+}).addTo(map);
 
-  </script>
+var tripdown = [
+    [10.782727, -0.853369],
+    [10.581847, -0.832949],
+    [10.465662, -0.789393],
+    [10.394350, -0.786141],
+    [10.350674, -0.798076],
+[10.283972, -0.827971],
+[10.220605, -0.829468],
+[10.167543, -0.805507],
+[9.982195, -0.825483],
+[9.877978, -0.872293],
+[9.807771, -0.860259],
+[9.726582, -0.819491],
+[9.695023, -0.831175],
+[9.479430, -0.846151],
+[9.400829, -0.841402], //tamale
+[9.140266, -1.162601],
+[9.124498, -1.273730],
+[9.165533, -1.507570],
+[9.120113, -1.726633],
+[9.077391, -1.763115],
+[9.082700, -1.794831],
+[9.085411, -1.820140],
+[9.219442, -1.858415],
+[9.231863, -1.840862],
+[9.259679, -1.850975], //mole
+];
+
+var mole2accra = [
+    [5.603717, -0.186964], //accra
+    [5.818231, -0.364970], 
+    [6.135366, -0.496573], 
+    [6.163074, -0.483611], 
+    [6.232223, -0.451400], 
+    [6.280925, -0.480796], 
+    [6.375132, -0.542123], 
+    [6.440256, -0.587519], 
+    [6.496646, -0.692039], 
+    [6.666600, -1.616271], // Kumasi
+    [6.884973, -1.643985],
+    [7.010063, -1.702595],
+    [7.087560, -1.712607],
+    [7.152817, -1.743399],
+    [7.256384, -1.819404],
+    [7.302779, -1.895575],
+    [7.440609, -1.979764],
+    [7.581045, -1.938338],
+    [7.875856, -1.781845],
+    [7.977464, -1.735643],
+    [8.054214, -1.727625],
+    [8.072738, -1.723616],
+    [8.086630, -1.702235],
+    [8.102506, -1.694885],
+    [8.161375, -1.691544],
+    [8.203041, -1.655463],
+    [8.237806, -1.634862],
+    [8.254367, -1.611536],
+    [8.341850, -1.569682],
+    [8.392226, -1.568559],
+    [8.414448, -1.559573],
+    [8.455578, -1.565336],
+    [8.471908, -1.559204],
+    [8.551163, -1.579682],
+    [8.792527, -1.570380],
+    [8.804736, -1.469632],
+    [8.819314, -1.454910],
+    [8.847280, -1.428494],
+    [8.886398, -1.423122],
+    [8.901940, -1.407668],
+    [9.123883, -1.273361],
+    [9.165533, -1.507570],
+    [9.259679, -1.850975],
+];
+var moletoaccraline = L.polyline(mole2accra, {
+    color: 'yellow',
+    dashArray:4,
+    weight:2
+}).addTo(map);
+
+
+var tripdownline = L.polyline(tripdown, {
+    color: 'green',
+    dashArray:4,
+    weight:2
+}).addTo(map);
+
+var overlays = {
+    "Trip to Bolgatanga":ghanaroadline2,
+    "Trip to Mole National Park":tripdownline,
+    "Bus ride from Mole to Accra":moletoaccraline
+};
+
+L.control.layers(overlays).addTo(map);
+    </script>
 </body>
 </html>
